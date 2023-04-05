@@ -20,6 +20,10 @@ def main():
 
     weather = requests.get(url).json()
     print(f"{str(weather['current_weather']['temperature'])} {temperature_unit}")
-    print(weather['hourly']['relativehumidity_2m'][int(weather['current_weather']['time'][11:13])])
+    time = int(weather['current_weather']['time'][11:13])
+    humidity = weather['hourly']['relativehumidity_2m'][time]
+    apparent_temperature = weather['hourly']['apparent_temperature'][time]
+    print(f"Feels like: {apparent_temperature}")
+    print(f"Humidity: {humidity}")
 if __name__ == "__main__":
     main()
