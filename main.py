@@ -1,5 +1,7 @@
 import requests
 import argparse
+from rich.console import Console
+from rich.table import Table
 
 def main():
     parser = argparse.ArgumentParser(
@@ -19,11 +21,17 @@ def main():
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&temperature_unit={temperature_unit}&windspeed_unit={windspeed_unit}&precipitation_unit={precipitation_unit}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,surface_pressure,dewpoint_2m,windspeed_10m,weathercode,precipitation,precipitation_probability&daily=weathercode,sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_max,apparent_temperature_max,apparent_temperature_min&timezone=auto"
 
     weather = requests.get(url).json()
-    print(f"{str(weather['current_weather']['temperature'])} {temperature_unit}")
+    temp = str(weather['current_weather']['temperature'])
     time = int(weather['current_weather']['time'][11:13])
     humidity = weather['hourly']['relativehumidity_2m'][time]
     apparent_temperature = weather['hourly']['apparent_temperature'][time]
     print(f"Feels like: {apparent_temperature}")
     print(f"Humidity: {humidity}")
+    table = Table()
+    table.add_column(location['display_name'], justify="center")
+    table.add_row(f"{temp} F", justify="left")
+
+    console = Console()
+    console.print(table)
 if __name__ == "__main__":
     main()
