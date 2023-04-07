@@ -1,7 +1,5 @@
 import requests
 import argparse
-from rich.console import Console
-from rich.table import Table
 
 def main():
     parser = argparse.ArgumentParser(
@@ -27,11 +25,6 @@ def main():
     apparent_temperature = weather['hourly']['apparent_temperature'][time]
     print(f"Feels like: {apparent_temperature}")
     print(f"Humidity: {humidity}")
-    table = Table()
-    table.add_column(location['display_name'], justify="center")
-    table.add_row(f"{temp} F", justify="left")
 
-    console = Console()
-    console.print(table)
 if __name__ == "__main__":
     main()
