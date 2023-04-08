@@ -139,6 +139,9 @@ def current(location, weather):
     dimensions = (width, cell_width)
     # Border Top
     print(f"{display.Edge.Top.fmt(width, display.BorderStyle.double)}")
+    # Address / Title
+    address = location[:width].center(width)
+    print(f"{display.Border.R.fmt(display.BorderStyle.double)}{address}{display.Border.R.fmt(display.BorderStyle.double)}")
 
 def product(location, weather):
     current(location, weather)

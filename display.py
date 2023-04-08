@@ -38,6 +38,11 @@ class Border(Enum):
                         return "╗"
                     case _:
                     	return "╮"
+            case (Border.R | Border.L):
+                match style:
+                    case BorderStyle.double: return "║"
+                    case BorderStyle.solid: return "┃"
+                    case _: return "│"
             case Border.BR:
                 match style:
                     case BorderStyle.single:
