@@ -2,6 +2,9 @@ import requests
 import argparse
 from enum import Enum
 
+MIN_WIDTH = 34
+MIN_CELL_WIDTH = MIN_WIDTH / 2 - 2
+
 WeatherCodeLocales = {
     "clear_sky": "Clear Sky",
     "mostly_clear": "Mostly Clear",
@@ -131,6 +134,9 @@ def current(location, weather):
     print(sunrise)
     print(sunset)
     print(wmo_code)
+    width = title_width + title_padding if title_width > MIN_WIDTH else MIN_WIDTH + title_padding
+    cell_width = longest_cell_width if longest_cell_width > MIN_CELL_WIDTH else MIN_CELL_WIDTH + 2
+    dimensions = (width, cell_width)
 
 def product(location, weather):
     current(location, weather)
