@@ -1,7 +1,7 @@
 import requests
 import argparse
 from enum import Enum
-
+import display
 MIN_WIDTH = 34
 MIN_CELL_WIDTH = MIN_WIDTH / 2 - 2
 
@@ -137,6 +137,8 @@ def current(location, weather):
     width = title_width + title_padding if title_width > MIN_WIDTH else MIN_WIDTH + title_padding
     cell_width = longest_cell_width if longest_cell_width > MIN_CELL_WIDTH else MIN_CELL_WIDTH + 2
     dimensions = (width, cell_width)
+    # Border Top
+    print(f"{display.Edge.Top.fmt(width, display.BorderStyle.double)}")
 
 def product(location, weather):
     current(location, weather)
