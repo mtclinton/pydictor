@@ -68,7 +68,38 @@ class WindDirection(Enum):
             case WindDirection.SW: return '↙'
             case WindDirection.W: return '←'
             case WindDirection.NW: return '↖'
-
+            
+def resolve_weather_code(code, is_night):
+    match code:
+        case 0: return (WeatherCodeLocales['clear_sky'], '☼' if is_night else '☼')
+        case 1: return (WeatherCodeLocales['mostly_clear'], '☼' if is_night else '☼')
+        case 2: return (WeatherCodeLocales['partly_cloudy'], '☼' if is_night else '☼')
+        case 3: return (WeatherCodeLocales['overcast'], '☼'),
+        case 45: return (WeatherCodeLocales['fog'], '☼' if is_night else '☼')
+        case 48: return (WeatherCodeLocales['depositing_rime_fog'], '☼'),
+        case 51: return (WeatherCodeLocales['light_drizzle'], '☼' if is_night else '☼')
+        case 53: return (WeatherCodeLocales['moderate_drizzle'], '☼' if is_night else '☼')
+        case 55: return (WeatherCodeLocales['dense_drizzle'], '☼' if is_night else '☼')
+        case 56: return (WeatherCodeLocales['light_freezing_drizzle'], '☼' if is_night else '☼')
+        case 57: return (WeatherCodeLocales['dense_freezing_drizzle'], '☼' if is_night else 'ﭽ')
+        case 61: return (WeatherCodeLocales['slight_rain'], '☼' if is_night else '☼')
+        case 63: return (WeatherCodeLocales['moderate_rain'], '☼' if is_night else '☼')
+        case 65: return (WeatherCodeLocales['heavy_rain'], '☼' if is_night else '☼')
+        case 66: return (WeatherCodeLocales['light_freezing_rain'], '☼' if is_night else '☼')
+        case 67: return (WeatherCodeLocales['heavy_freezing_rain'], '☼' if is_night else '☼')
+        case 71: return (WeatherCodeLocales['slight_snow_fall'], '☼' if is_night else '☼')
+        case 73: return (WeatherCodeLocales['moderate_snow_fall'], '☼' if is_night else '☼')
+        case 75: return (WeatherCodeLocales['heavy_snow_fall'], '☼' if is_night else '☼')
+        case 77: return (WeatherCodeLocales['snow_grains'], '☼'),
+        case 80: return (WeatherCodeLocales['slight_rain_showers'], '☼' if is_night else '☼')
+        case 81: return (WeatherCodeLocales['moderate_rain_showers'], '☼' if is_night else '☼')
+        case 82: return (WeatherCodeLocales['violent_rain_showers'], '☼' if is_night else '☼')
+        case 85: return (WeatherCodeLocales['slight_snow_showers'], '☼' if is_night else '☼')
+        case 86: return (WeatherCodeLocales['heavy_snow_showers'], '☼' if is_night else '☼')
+        case 95: return (WeatherCodeLocales['thunderstorm'], '☼' if is_night else '☼')
+        case 96: return (WeatherCodeLocales['thunderstorm_slight_hail'], '☼' if is_night else '☼')
+        case 99: return (WeatherCodeLocales['thunderstorm_heavy_hail'], '☼' if is_night else '☼')
+        case _ : return ("Unknown weather code", '0')
 
 def current(location, weather):
     current_hour = int(weather['current_weather']['time'][11:13])	
@@ -90,7 +121,7 @@ def current(location, weather):
     pressure = f" {weather['hourly']['surface_pressure'][current_hour]}{weather['hourly_units']['surface_pressure']}"
     sunrise = f"🌅 {sunrise}"
     sunset = f"🌇 {sunset}"
-    #wmo_code = resolve_weather_code(weather['current_weather']['weathercode'], night)
+    wmo_code = resolve_weather_code(weather['current_weather']['weathercode'], night)
 
     # Dimensions
     title_width = len(location)
@@ -99,7 +130,7 @@ def current(location, weather):
     print(wind)
     print(sunrise)
     print(sunset)
-    #print(wmo_code)
+    print(wmo_code)
 
 def product(location, weather):
     current(location, weather)
