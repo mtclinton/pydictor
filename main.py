@@ -1,7 +1,43 @@
 import requests
 import argparse
 
+def get_direction(wd):
+    pass
+
+def current(location, weather):
+    current_hour = weather['current_weather'['time'][11:13]
+    sunrise_hour = weather['daily']['sunrise'][0][11:13]
+    sunset_hour = weather['daily']['sunset'][0][11:13]
+    sunrise = weather['daily']['sunrise'][0][11:16]
+    sunset = weather['daily']['sunset'][0][11:16]
+    night = current_hour < sunrise_hour or current_hour > sunset_hour
+    
+    # Display Items
+    temperature = f"{weather['current_weather']['temperature']}°{weather['hourly_units']['temperature_2m']}"
+    apparent_temperature = f"Feels like {weather['hourly']['apparent_temperature'][current_hour]}{weather['hourly_units']['temperature_2m']}"
+
+    humidity = f"Humidity: {weather['hourly']['relativehumidity_2m'][current_hour]}{weather['hourly_units']['relativehumidity_2m']}"
+    dewpoint = f"Dew Point: {weather['hourly']['dewpoint_2m'][current_hour]}{weather['hourly_units']['dewpoint_2m']}"
+    wind_direction = get_direction(weather['current_weather']['winddirection'])
+    let wind = format!(
+        "{} {}{} {}",
+        wind_direction.get_icon(),
+        weather.current_weather.windspeed,
+        weather.hourly_units.windspeed_10m,
+        wind_direction
+    );
+    pressure = f" {weather['hourly']['surface_pressure'][current_hour]}{weather['hourly_units']['surface_pressure']}"
+    sunrise = f" {sunrise}"
+    sunset = f(" {sunset}"
+    let wmo_code = WeatherCode::resolve(weather.current_weather.weathercode, night, &t.weather_code)?;
+
+    # Dimensions
+    title_width = len(location)
+    title_padding = 2 * 2 # 2 spaces on each side
+    longest_cell_width = len(humidity)
+
 def product(location, weather):
+    current(location, weather)
     temp = str(weather['current_weather']['temperature'])
     time = int(weather['current_weather']['time'][11:13])
     humidity = weather['hourly']['relativehumidity_2m'][time]
