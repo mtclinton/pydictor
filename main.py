@@ -130,10 +130,6 @@ def current(location, weather):
     title_width = len(location)
     title_padding = 2 * 2 # 2 spaces on each side
     longest_cell_width = len(humidity)
-    print(wind)
-    print(sunrise)
-    print(sunset)
-    print(wmo_code)
     width = title_width + title_padding if title_width > MIN_WIDTH else MIN_WIDTH + title_padding
     cell_width = longest_cell_width if longest_cell_width > MIN_CELL_WIDTH else MIN_CELL_WIDTH + 2
     dimensions = (width, cell_width)
@@ -145,19 +141,18 @@ def current(location, weather):
     
     # Separator
     print(f"{display.Separator.Double.fmt(width, display.BorderStyle.double)}")
+    
     # Temperature & Weathercode
     temp_wc = f"  {wmo_code[1]} {temperature} {wmo_code[0]}"
     print(f"{display.Border.L.fmt(display.BorderStyle.double)}{temp_wc.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
+    
+    # Apparent Temperature
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}  {apparent_temperature.ljust(width-2)}{display.Border.R.fmt(display.BorderStyle.double)}")
+
 
 
 def product(location, weather):
     current(location, weather)
-    temp = str(weather['current_weather']['temperature'])
-    time = int(weather['current_weather']['time'][11:13])
-    humidity = weather['hourly']['relativehumidity_2m'][time]
-    apparent_temperature = weather['hourly']['apparent_temperature'][time]
-    print(f"Feels like: {apparent_temperature}")
-    print(f"Humidity: {humidity}")
     CB = '\x1b[1;34;40m'
     CE = '\x1b[0m'
     print(f"{CB}Weather data by Open-Meteo.com{CE}")
