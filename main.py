@@ -105,7 +105,7 @@ def resolve_weather_code(code, is_night):
         case _ : return ("Unknown weather code", '0')
 
 def current(location, weather):
-    current_hour = int(weather['current_weather']['time'][11:13])	
+    current_hour = int(weather['current_weather']['time'][11:13])    
     sunrise_hour = int(weather['daily']['sunrise'][0][11:13])
     sunset_hour = int(weather['daily']['sunset'][0][11:13])
     sunrise = weather['daily']['sunrise'][0][11:16]
@@ -142,6 +142,10 @@ def current(location, weather):
     # Address / Title
     address = location[:width].center(width)
     print(f"{display.Border.R.fmt(display.BorderStyle.double)}{address}{display.Border.R.fmt(display.BorderStyle.double)}")
+    
+    
+    # Separator
+    print(f"{display.Separator.Double.fmt(width, display.BorderStyle.double)}")
 
 def product(location, weather):
     current(location, weather)
