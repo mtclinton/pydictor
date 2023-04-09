@@ -77,7 +77,7 @@ def resolve_weather_code(code, is_night):
         case 0: return (WeatherCodeLocales['clear_sky'], '☼' if is_night else '☼')
         case 1: return (WeatherCodeLocales['mostly_clear'], '☼' if is_night else '☼')
         case 2: return (WeatherCodeLocales['partly_cloudy'], '☼' if is_night else '☼')
-        case 3: return (WeatherCodeLocales['overcast'], '☼'),
+        case 3: return (WeatherCodeLocales['overcast'], '☼')
         case 45: return (WeatherCodeLocales['fog'], '☼' if is_night else '☼')
         case 48: return (WeatherCodeLocales['depositing_rime_fog'], '☼'),
         case 51: return (WeatherCodeLocales['light_drizzle'], '☼' if is_night else '☼')
@@ -93,7 +93,7 @@ def resolve_weather_code(code, is_night):
         case 71: return (WeatherCodeLocales['slight_snow_fall'], '☼' if is_night else '☼')
         case 73: return (WeatherCodeLocales['moderate_snow_fall'], '☼' if is_night else '☼')
         case 75: return (WeatherCodeLocales['heavy_snow_fall'], '☼' if is_night else '☼')
-        case 77: return (WeatherCodeLocales['snow_grains'], '☼'),
+        case 77: return (WeatherCodeLocales['snow_grains'], '☼')
         case 80: return (WeatherCodeLocales['slight_rain_showers'], '☼' if is_night else '☼')
         case 81: return (WeatherCodeLocales['moderate_rain_showers'], '☼' if is_night else '☼')
         case 82: return (WeatherCodeLocales['violent_rain_showers'], '☼' if is_night else '☼')
@@ -113,7 +113,7 @@ def current(location, weather):
     night = current_hour < sunrise_hour or current_hour > sunset_hour
     
     # Display Items
-    temperature = f"{weather['current_weather']['temperature']}°{weather['hourly_units']['temperature_2m']}"
+    temperature = f"{weather['current_weather']['temperature']}{weather['hourly_units']['temperature_2m']}"
     apparent_temperature = f"Feels like {weather['hourly']['apparent_temperature'][current_hour]}{weather['hourly_units']['temperature_2m']}"
 
     humidity = f"Humidity: {weather['hourly']['relativehumidity_2m'][current_hour]}{weather['hourly_units']['relativehumidity_2m']}"
@@ -141,11 +141,14 @@ def current(location, weather):
     print(f"{display.Edge.Top.fmt(width, display.BorderStyle.double)}")
     # Address / Title
     address = location[:width].center(width)
-    print(f"{display.Border.R.fmt(display.BorderStyle.double)}{address}{display.Border.R.fmt(display.BorderStyle.double)}")
-    
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}{address}{display.Border.R.fmt(display.BorderStyle.double)}")
     
     # Separator
     print(f"{display.Separator.Double.fmt(width, display.BorderStyle.double)}")
+    # Temperature & Weathercode
+    temp_wc = f"  {wmo_code[1]} {temperature} {wmo_code[0]}"
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}{temp_wc.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
+
 
 def product(location, weather):
     current(location, weather)
