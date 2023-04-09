@@ -48,6 +48,19 @@ class WindDirection(Enum):
     SW = 7
     W = 8
     
+
+    def display_direction(self):
+        match self:
+            case WindDirection.N: return "N"
+            case WindDirection.NE: return "NE"
+            case WindDirection.E: return "E"
+            case WindDirection.SE: return "SE"
+            case WindDirection.S: return "S"
+            case WindDirection.SW: return "SW"
+            case WindDirection.W: return "W"
+            case WindDirection.NW: return "NW"
+
+    
     @staticmethod
     def get_direction(wd):
         wd = wd % 360.0
@@ -120,8 +133,8 @@ def current(location, weather):
     dewpoint = f"Dew Point: {weather['hourly']['dewpoint_2m'][current_hour]}{weather['hourly_units']['dewpoint_2m']}"
     wind_direction = WindDirection.get_direction(weather['current_weather']['winddirection'])
     icon = wind_direction.get_icon()
-    wind = f"{icon} {weather['current_weather']['windspeed']}{weather['hourly_units']['windspeed_10m']} {wind_direction}"
-    pressure = f" {weather['hourly']['surface_pressure'][current_hour]}{weather['hourly_units']['surface_pressure']}"
+    wind = f"{icon} {weather['current_weather']['windspeed']}{weather['hourly_units']['windspeed_10m']} {wind_direction.display_direction()}"
+    pressure = f"☉ {weather['hourly']['surface_pressure'][current_hour]}{weather['hourly_units']['surface_pressure']}"
     sunrise = f"🌅 {sunrise}"
     sunset = f"🌇 {sunset}"
     wmo_code = resolve_weather_code(weather['current_weather']['weathercode'], night)
@@ -155,6 +168,10 @@ def current(location, weather):
     # Humidity & Dewpoint
     hum_dew = f"  {humidity}".ljust(int(cell_width))+f"{dewpoint}"
     print(f"{display.Border.L.fmt(display.BorderStyle.double)}{hum_dew.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
+    
+    # Wind & Pressure
+    wind_pres = f"  {wind}".ljust(int(cell_width))+f"{pressure}"
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}{wind_pres.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
 
 
 def product(location, weather):
