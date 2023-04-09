@@ -148,7 +148,13 @@ def current(location, weather):
     
     # Apparent Temperature
     print(f"{display.Border.L.fmt(display.BorderStyle.double)}  {apparent_temperature.ljust(width-2)}{display.Border.R.fmt(display.BorderStyle.double)}")
+    
+    # Blank Line
+    print(f"{display.Separator.Blank.fmt(width, display.BorderStyle.double)}")
 
+    # Humidity & Dewpoint
+    hum_dew = f"  {humidity}".ljust(int(cell_width))+f"{dewpoint}"
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}{hum_dew.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
 
 
 def product(location, weather):
