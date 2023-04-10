@@ -135,8 +135,8 @@ def current(location, weather):
     icon = wind_direction.get_icon()
     wind = f"{icon} {weather['current_weather']['windspeed']}{weather['hourly_units']['windspeed_10m']} {wind_direction.display_direction()}"
     pressure = f"☉ {weather['hourly']['surface_pressure'][current_hour]}{weather['hourly_units']['surface_pressure']}"
-    sunrise = f"🌅 {sunrise}"
-    sunset = f"🌇 {sunset}"
+    sunrise = f"☉ {sunrise}"
+    sunset = f"☉ {sunset}"
     wmo_code = resolve_weather_code(weather['current_weather']['weathercode'], night)
 
     # Dimensions
@@ -172,6 +172,13 @@ def current(location, weather):
     # Wind & Pressure
     wind_pres = f"  {wind}".ljust(int(cell_width))+f"{pressure}"
     print(f"{display.Border.L.fmt(display.BorderStyle.double)}{wind_pres.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
+    
+    # Sunrise & Sunset
+    sun = f"  {sunrise}".ljust(int(cell_width))+f"{sunset}"
+    print(f"{display.Border.L.fmt(display.BorderStyle.double)}{sun.ljust(width)}{display.Border.R.fmt(display.BorderStyle.double)}")
+
+    # Border Bottom
+    print(f"{display.Edge.Bottom.fmt(width, display.BorderStyle.double)}")
 
 
 def product(location, weather):
