@@ -9,7 +9,7 @@ class Border(Enum):
     B = 6
     BL = 7
     L = 8
-    
+
     def fmt(self, style):
         match self:
             case Border.TL:
@@ -63,51 +63,50 @@ class Border(Enum):
                         return "╚"
                     case _:
                     	return "╰"
-    
+
 
 class BorderStyle(Enum):
     rounded = 1
     single = 2
     solid = 3
     double = 4
-    
+
 class Edge(Enum):
     Top = 1
     Bottom = 2
-    
+
     def fmt(self, width, style):
         match self:
             case Edge.Top:
                 return f"{Border.TL.fmt(style)}{Border.T.fmt(style)*width}{Border.TR.fmt(style)}"
             case Edge.Bottom:
                 return f"{Border.BL.fmt(style)}{Border.B.fmt(style)*width}{Border.BR.fmt(style)}"
-                
+
 class Separator(Enum):
     Blank = 1
     Single = 2
     Solid = 3
     Double = 4
     Dashed = 5
-    
+
     def fmt(self, width, style):
         match self:
-            case Separator.Blank: 
+            case Separator.Blank:
                 sep = " " * width
                 return f"{Border.L.fmt(style)}{sep}{Border.R.fmt(style)}"
-            case Separator.Single: 
+            case Separator.Single:
                 sep = "┈"*width
                 return f"├{sep}┤"
-            case Separator.Solid: 
+            case Separator.Solid:
                 sep = "─"*width
                 return f"├{sep}┤"
-            case Separator.Double: 
+            case Separator.Double:
                 sep = "─"*width
                 return f"┠{sep}┨"
-            case Separator.Dashed: 
+            case Separator.Dashed:
                 sep = "─"*width
                 return f"╟{sep}╢"
 
 if __name__ == "__main__":
     e = Separator.Double
     print(e.fmt(10, BorderStyle.solid))
-
